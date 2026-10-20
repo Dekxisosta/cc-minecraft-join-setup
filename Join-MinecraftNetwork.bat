@@ -17,7 +17,7 @@ net session >nul 2>&1
 if %errorlevel% neq 0 (
     echo Requesting administrator access...
     powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
-    if %errorlevel% neq 0 (
+    if errorlevel 1 (
         echo.
         echo Administrator access was declined or failed.
         pause
