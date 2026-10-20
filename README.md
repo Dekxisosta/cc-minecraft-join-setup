@@ -1,15 +1,34 @@
 # Minecraft network setup
 
-A setup guide (`index.html`) and scripts that connect a friend's computer to a private Minecraft server over Tailscale.
+A React setup guide and scripts that connect a friend's computer to a private Minecraft server over Tailscale.
 
-| File | Purpose |
+| Route | Page |
 | --- | --- |
-| `index.html` | The setup guide. Its download buttons link to the scripts below. |
-| `Join-MinecraftNetwork.bat` | Windows launcher. Needs the `.ps1` in the same folder. |
-| `Join-MinecraftNetwork.ps1` | Windows setup script. |
-| `join-minecraft-network.sh` | macOS and Linux setup script. |
+| `/` | Landing page with two buttons: Windows, and macOS / Linux |
+| `/windows` | Windows guide. Tabs: launcher (.bat), PowerShell, install it yourself |
+| `/macos-linux` | macOS and Linux guide. Tabs: script (.sh), install it yourself |
+
+## Project layout
+
+| Path | Purpose |
+| --- | --- |
+| `src/pages/` | The four pages (`Landing`, `WindowsPage`, `MacLinuxPage`, `NotFound`). |
+| `src/components/` | Shared pieces: `Tabs`, `Console` (command box with Copy), `GuideLayout`, shared sections. |
+| `src/data/problems.jsx` | The "Fix problems" tables, one list per platform. |
+| `src/config.js` | Server address, Discord link, Tailscale download link. |
+| `src/styles.css` | All styles. |
+| `public/` | The three setup scripts. Files here are served from the site root, so the download links stay `/Join-MinecraftNetwork.bat` and so on. |
+| `vercel.json` | Sends every other path to the app, and makes the script links download instead of opening as text. |
 | `.gitattributes` | Keeps Windows line endings on `.bat`/`.ps1` and Unix endings on `.sh`. |
-| `vercel.json` | Makes the script links download instead of opening as text. |
+
+## Develop
+
+```
+npm install
+npm run dev
+```
+
+`npm run build` writes the site to `dist/`. `npm run preview` serves that build locally.
 
 ## Auth key
 
@@ -21,12 +40,13 @@ whose tag can only reach the Minecraft server port in your Tailscale access rule
 
 1. Push this folder to a GitHub repository.
 2. In Vercel, choose **Add New > Project** and import the repository.
-3. Leave the framework preset as **Other** and the build command empty. Deploy.
-4. Share the production URL. Updating a script is a normal commit; Vercel redeploys on push.
+3. Vercel detects **Vite**. Leave the build command (`npm run build`) and output directory (`dist`) as they are. Deploy.
+4. Share the production URL. Updating a page or script is a normal commit; Vercel redeploys on push.
 
 ## Editing the server address
 
-Change `100.86.40.47` and `28523` in all three scripts, and in `index.html` (the address box and the manual checks).
+Change `100.86.40.47` and `28523` in `src/config.js`, and in all three scripts in `public/`.
+The guide pages read the address from `src/config.js`.
 
 ---
 
