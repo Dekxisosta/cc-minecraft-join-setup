@@ -44,7 +44,7 @@ if (-not $isAdmin) {
 
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-$Host.UI.RawUI.WindowTitle = "Minecraft Network Setup"
+$Host.UI.RawUI.WindowTitle = "Cafe Camellia - Minecraft Network Setup"
 
 $Full  = [string][char]0x2588
 $Empty = [string][char]0x2591
@@ -98,16 +98,18 @@ function Get-FileWithBar([string]$Url, [string]$Path) {
 }
 
 function Wait-WithBar([System.Diagnostics.Process]$Process, [string]$Text, [int]$ExpectedSeconds, [int]$TimeoutSeconds) {
+    $null = $Process.Handle   # cache the handle so ExitCode is not $null
     $sw = [Diagnostics.Stopwatch]::StartNew()
     while (-not $Process.HasExited) {
         if ($sw.Elapsed.TotalSeconds -gt $TimeoutSeconds) {
-            try { $Process.Kill() } catch {}
+            try { $Process.Kill() } catch { Write-Verbose "Could not stop process: $($_.Exception.Message)" }
             throw "Timed out: $Text"
         }
         $pct = [Math]::Min(95, [int](95 * $sw.Elapsed.TotalSeconds / $ExpectedSeconds))
         Show-Bar $pct ("{0} ({1}s)" -f $Text, [int]$sw.Elapsed.TotalSeconds)
         Start-Sleep -Milliseconds 200
     }
+    $Process.WaitForExit()   # makes sure ExitCode is final
     Show-Bar 100 $Text
     Write-Host ""
 }
@@ -155,7 +157,7 @@ $exitCode = 0
 Clear-Host
 Write-Host ""
 Write-Host "  ==========================================" -ForegroundColor Cyan
-Write-Host "        MINECRAFT NETWORK SETUP"             -ForegroundColor White
+Write-Host "    CAFE CAMELLIA MINECRAFT NETWORK SETUP"    -ForegroundColor White
 Write-Host "  ==========================================" -ForegroundColor Cyan
 
 try {
@@ -183,7 +185,7 @@ try {
 
         Write-Info "Installing..."
         $proc = Start-Process -FilePath $InstallerPath -ArgumentList "/quiet" -PassThru
-        Wait-WithBar $proc "Installing" 30 180
+        Wait-WithBar -Process $proc -Text "Installing" -ExpectedSeconds 30 -TimeoutSeconds 180
         if ($proc.ExitCode -ne 0) {
             throw "Installer failed with exit code $($proc.ExitCode)."
         }
@@ -217,7 +219,7 @@ try {
     Write-Step "Joining private network"
     $needJoin = $true
     $status   = $null
-    try { $status = (& $TailscaleExe status --json 2>$null | Out-String | ConvertFrom-Json) } catch {}
+    try { $status = (& $TailscaleExe status --json 2>$null | Out-String | ConvertFrom-Json) } catch { Write-Verbose "Could not read Tailscale status: $($_.Exception.Message)" }
 
     if ($status -and $status.BackendState -eq "Running") {
         if (Test-Port $MinecraftHost $MinecraftPort) {
@@ -244,11 +246,14 @@ try {
         $errFile = Join-Path $env:TEMP "ts-err.txt"
         $proc = Start-Process -FilePath $TailscaleExe -ArgumentList $upArgs -NoNewWindow -PassThru `
             -RedirectStandardOutput $outFile -RedirectStandardError $errFile
-        Wait-WithBar $proc "Connecting" 15 90
+        Wait-WithBar -Process $proc -Text "Connecting" -ExpectedSeconds 15 -TimeoutSeconds 90
 
-        if ($proc.ExitCode -ne 0) {
+        # Trust the real Tailscale state, not just the exit code
+        $state = $null
+        try { $state = (& $TailscaleExe status --json 2>$null | Out-String | ConvertFrom-Json).BackendState } catch { Write-Verbose "Could not read Tailscale state: $($_.Exception.Message)" }
+        if ($proc.ExitCode -ne 0 -and $state -ne "Running") {
             $detail = (Get-Content $errFile -Raw -ErrorAction SilentlyContinue)
-            throw "Tailscale failed to connect (exit code $($proc.ExitCode)). $detail"
+            throw "Tailscale failed to connect (exit code $($proc.ExitCode), state $state). $detail"
         }
         Remove-Item $outFile, $errFile -Force -ErrorAction SilentlyContinue
     }
@@ -270,7 +275,7 @@ try {
 
     $ServerAddress = "${MinecraftHost}:${MinecraftPort}"
     $copied = $false
-    try { Set-Clipboard -Value $ServerAddress; $copied = $true } catch {}
+    try { Set-Clipboard -Value $ServerAddress; $copied = $true } catch { Write-Verbose "Clipboard unavailable: $($_.Exception.Message)" }
 
     Write-Host ""
     Write-Host "  ==========================================" -ForegroundColor Cyan
@@ -300,7 +305,7 @@ catch {
     Write-Host ""
     Write-Host "  [ERROR] $($_.Exception.Message)" -ForegroundColor Red
     Write-Host "  Log: $LogPath" -ForegroundColor DarkGray
-    try { Add-Content -Path $LogPath -Value ("{0}  {1}`n{2}" -f (Get-Date), $_.Exception.Message, $_.ScriptStackTrace) } catch {}
+    try { Add-Content -Path $LogPath -Value ("{0}  {1}`n{2}" -f (Get-Date), $_.Exception.Message, $_.ScriptStackTrace) } catch { Write-Verbose "Could not write log: $($_.Exception.Message)" }
     $exitCode = 1
 }
 finally {
