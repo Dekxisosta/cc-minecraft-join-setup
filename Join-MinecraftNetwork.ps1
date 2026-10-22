@@ -239,7 +239,7 @@ try {
         $AuthKey = Read-AuthKey
         Write-Ok "Auth key entered"
 
-        $upArgs = @("up", "--authkey=$AuthKey", "--reset")
+        $upArgs = @("up", "--authkey=$AuthKey", "--reset", "--unattended")
         if ($ForceReauth) { $upArgs += "--force-reauth" }
 
         $outFile = Join-Path $env:TEMP "ts-out.txt"
