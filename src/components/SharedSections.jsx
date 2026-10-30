@@ -44,23 +44,22 @@ export function ModpackSection() {
       <p>The server runs the <strong>FarmingTales</strong> modpack on Forge 1.20.1, so install it before you join.</p>
       <ol className="steps">
         <Step title="Download the modpack">
-          <p>You must be <Key>connected to Tailscale</Key> first (the previous section). The file is about 1 GB, so it may take a few minutes.</p>
+          <p>You must be <Key>connected to Tailscale</Key> first (the previous section). The file is about 1 GB (1,018 MB), so it may take a few minutes.</p>
           <div className="dl">
             <div className="dl-row">
               <a className="dl-btn main" href={MODPACK_URL} target="_blank" rel="noopener noreferrer">Download FarmingTales (~1 GB)</a>
             </div>
-            <p className="dl-note">This link only works while Tailscale is connected.</p>
+            <p className="dl-note">This link only works while Tailscale is connected. Your browser may warn <strong>insecure download</strong> or <strong>file blocked</strong> because the link uses <Code>http://</Code>. Click <strong>Keep</strong> or <strong>Download anyway</strong> — the file is safe, because it downloads inside your encrypted Tailscale connection.</p>
           </div>
         </Step>
         <Step title="Install Forge 1.20.1">
-          <p>In any launcher (Prism Launcher, the official launcher, PCL2, or HMCL), install a <strong>Forge 1.20.1</strong> version.</p>
+          <p>In any launcher (Prism Launcher, the official launcher, TLauncher, or SKlauncher), install a <strong>Forge 1.20.1</strong> version.</p>
         </Step>
         <Step title="Put the files in the game folder">
           <p>Launch the Forge 1.20.1 version <Key>once</Key> so it creates the game folder, then <Key>close</Key> it. Unzip the modpack and copy <Key>everything inside</Key> into the game folder. Overwrite when asked.</p>
           <ul className="plain">
-            <li>Official launcher: <Code>%appdata%\.minecraft</Code></li>
+            <li>Official launcher, TLauncher, or SKlauncher: <Code>%appdata%\.minecraft</Code></li>
             <li>Prism Launcher / MultiMC: right-click the instance, then <strong>Open Folder</strong>.</li>
-            <li>PCL2 / HMCL: right-click the version, then <strong>Open Game Folder</strong>.</li>
           </ul>
         </Step>
         <Step title="Launch and join">
