@@ -50,4 +50,4 @@ The guide pages read the address from `src/config.js`.
 
 ---
 
-Setup guide and scripts by Dekxisosta. Server hosting setup by KannaLife. Minecraft and its logo belong to Mojang Studios.
+Setup guide and scripts by Dekxisosta. Server hosting setup by KannaLIFE. Minecraft and its logo belong to Mojang Studios.
