@@ -3,5 +3,8 @@ export const MC_HOST = "100.86.40.47";
 export const MC_PORT = 28523;
 export const ADDRESS = `${MC_HOST}:${MC_PORT}`;
 
+// Modpack download, served from the same host over Tailscale (port 8080).
+export const MODPACK_URL = "http://100.86.40.47:8080/FarmingTales_modpack.zip";
+
 export const DISCORD_URL = "https://discord.gg/8GeHTPErd7";
 export const TAILSCALE_DOWNLOAD_URL = "https://tailscale.com/download";

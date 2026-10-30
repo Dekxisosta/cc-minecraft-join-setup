@@ -3,7 +3,7 @@ import Section, { Step } from "../components/Section.jsx";
 import Console from "../components/Console.jsx";
 import Tabs from "../components/Tabs.jsx";
 import Key from "../components/Key.jsx";
-import { DiscordBox, JoinSection, CreditsSection, ProblemsTable } from "../components/SharedSections.jsx";
+import { DiscordBox, JoinSection, ModpackSection, CreditsSection, ProblemsTable } from "../components/SharedSections.jsx";
 import { unixRows } from "../data/problems.jsx";
 import { TOC } from "../data/toc.js";
 import { DISCORD_URL, MC_HOST, MC_PORT, TAILSCALE_DOWNLOAD_URL } from "../config.js";
@@ -111,6 +111,7 @@ export default function MacLinuxPage() {
         />
       </Section>
 
+      <ModpackSection />
       <JoinSection />
 
       <Section id="output" title="What you’ll see">
