@@ -2,7 +2,7 @@ import Section, { Step } from "./Section.jsx";
 import Console from "./Console.jsx";
 import Key from "./Key.jsx";
 import creditArt from "../assets/credit-art.jpg";
-import { ADDRESS, DISCORD_URL, MODPACK_URL } from "../config.js";
+import { ADDRESS, DISCORD_URL, MODPACK_URL, MODPACK_ALT_URL } from "../config.js";
 
 const Code = ({ children }) => <code className="i">{children}</code>;
 
@@ -44,12 +44,13 @@ export function ModpackSection() {
       <p>The server runs the <strong>FarmingTales</strong> modpack on Forge 1.20.1, so install it before you join.</p>
       <ol className="steps">
         <Step title="Download the modpack">
-          <p>You must be <Key>connected to Tailscale</Key> first (the previous section). The file is about 1 GB (1,018 MB), so it may take a few minutes.</p>
+          <p>The file is about 1 GB (1,018 MB), so it may take a few minutes.</p>
           <div className="dl">
             <div className="dl-row">
               <a className="dl-btn main" href={MODPACK_URL} target="_blank" rel="noopener noreferrer">Download FarmingTales (~1 GB)</a>
             </div>
-            <p className="dl-note">This link only works while Tailscale is connected. Your browser may warn <strong>insecure download</strong> or <strong>file blocked</strong> because the link uses <Code>http://</Code>. Click <strong>Keep</strong> or <strong>Download anyway</strong> — the file is safe, because it downloads inside your encrypted Tailscale connection.</p>
+            <p className="dl-note">Google Drive may warn it can't scan the file for viruses — click <strong>Download anyway</strong>.</p>
+            <p className="dl-note">Backup link (only while Tailscale is connected): <a href={MODPACK_ALT_URL} target="_blank" rel="noopener noreferrer">FarmingTales_modpack.zip</a></p>
           </div>
         </Step>
         <Step title="Install Forge 1.20.1">
