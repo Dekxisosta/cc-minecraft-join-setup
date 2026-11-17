@@ -1,5 +1,5 @@
-// Change the server address here AND in the three scripts in /public.
-export const MC_HOST = "100.86.40.47";
+// Change the server address here AND in Join-MinecraftNetwork.ps1 / join-minecraft-network.sh.
+export const MC_HOST = "100.74.149.85";
 export const MC_PORT = 28523;
 export const ADDRESS = `${MC_HOST}:${MC_PORT}`;
 

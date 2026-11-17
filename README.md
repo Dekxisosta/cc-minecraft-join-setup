@@ -45,7 +45,7 @@ whose tag can only reach the Minecraft server port in your Tailscale access rule
 
 ## Editing the server address
 
-Change `100.86.40.47` and `28523` in `src/config.js`, and in all three scripts in `public/`.
+Change `100.74.149.85` and `28523` in `src/config.js`, `Join-MinecraftNetwork.ps1` and `join-minecraft-network.sh`. The `.bat` only launches the `.ps1`; the three download links in `vercel.json` serve these files straight from this repository.
 The guide pages read the address from `src/config.js`.
 
 ---

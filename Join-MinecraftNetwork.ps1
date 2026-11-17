@@ -10,7 +10,7 @@
 $AuthKey        = $null
 $ForceReauth    = $false   # $true kicks the user off any other tailnet they are on
 
-$MinecraftHost  = "100.86.40.47"
+$MinecraftHost  = "100.74.149.85"
 $MinecraftPort  = 28523
 $InstallerUrl   = "https://pkgs.tailscale.com/stable/tailscale-setup-latest.exe"
 $InstallerPath  = Join-Path $env:TEMP "tailscale-setup.exe"

@@ -2,7 +2,7 @@
 # join-minecraft-network.sh (macOS and Linux)
 # Run with:  bash join-minecraft-network.sh
 
-MC_HOST="100.86.40.47"
+MC_HOST="100.74.149.85"
 MC_PORT=28523
 FORCE_REAUTH=0
 
