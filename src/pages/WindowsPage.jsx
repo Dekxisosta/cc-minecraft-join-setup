@@ -3,7 +3,7 @@ import Section, { Step } from "../components/Section.jsx";
 import Console from "../components/Console.jsx";
 import Tabs from "../components/Tabs.jsx";
 import Key from "../components/Key.jsx";
-import { DiscordBox, JoinSection, CreditsSection, ProblemsTable } from "../components/SharedSections.jsx";
+import { DiscordBox, JoinSection, ProblemsTable } from "../components/SharedSections.jsx";
 import { windowsRows } from "../data/problems.jsx";
 import { TOC } from "../data/toc.js";
 import { DISCORD_URL, MC_HOST, MC_PORT, TAILSCALE_DOWNLOAD_URL } from "../config.js";
@@ -204,8 +204,6 @@ export default function WindowsPage() {
         <Console label="PowerShell (Administrator)" code={CMD.logout} />
         <p>To remove Tailscale completely, go to <strong>Settings</strong>, <strong>Apps</strong>, <strong>Installed apps</strong>, <strong>Tailscale</strong>, <strong>Uninstall</strong>.</p>
       </Section>
-
-      <CreditsSection />
     </GuideLayout>
   );
 }

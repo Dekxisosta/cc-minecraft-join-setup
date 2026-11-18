@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import GuideLayout from "../components/GuideLayout.jsx";
 import Section from "../components/Section.jsx";
 import { ADDRESS } from "../config.js";
@@ -312,10 +311,6 @@ export default function PluginsPage() {
       {sortedPlugins.map((p) => (
         <Plugin key={p.id} plugin={p} />
       ))}
-
-      <p className="pg-back">
-        <Link to="/">Back to the setup guide</Link>
-      </p>
     </GuideLayout>
   );
 }

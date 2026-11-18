@@ -179,11 +179,37 @@
     background: rgba(100,193,246,.22); border-left: 6px solid var(--blue);
   }
   .pg-link { margin: .85rem 0 0; font: 600 1rem var(--px); }
-  .pg-link a, .pg-entry a, .pg-back a { color: var(--royal); }
-  .pg-entry { margin: 1.4rem 0 0; font: 600 1.05rem var(--px); }
-  .pg-back { margin: 2rem 0 0; font: 600 1.05rem var(--px); }
+  .pg-link a { color: var(--royal); }
   .pg-steps { margin: 1.1rem 0 .2rem; padding: .9rem 1.1rem; background: rgba(47,100,179,.10); border-left: 6px solid var(--royal); }
   .pg-steps h3 { margin: 0 0 .45rem; }
   .pg-steps ol { margin: 0 0 0 1.2rem; padding: 0; }
   .pg-steps li { margin: .35rem 0; font-size: 1rem; }
   .pg-steps-intro { margin: 0 0 .6rem; font-size: .98rem; opacity: .92; }
+
+  /* ---- Site navigation, at the end of every page ---- */
+  nav.site-nav {
+    background: var(--paper); border: 4px solid var(--obs);
+    box-shadow: var(--bevel), 8px 8px 0 var(--obs);
+    padding: 1.1rem 1.3rem 1.3rem; margin: 0 0 2.25rem;
+  }
+  .sn-title { margin: 0 0 .9rem; font: 700 1.2rem var(--px); color: var(--navy); }
+  nav.site-nav ul {
+    list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (max-width: 34rem) { nav.site-nav ul { grid-template-columns: 1fr; } }
+  .sn-link {
+    display: block; height: 100%; text-decoration: none; background: var(--obs);
+    color: var(--stone); border: 3px solid var(--obs); box-shadow: var(--bevel);
+    padding: .6rem .95rem .7rem;
+  }
+  .sn-link strong { display: block; font: 700 1.1rem/1.25 var(--px); color: #fff; }
+  .sn-link small { font-size: .95rem; line-height: 1.35; }
+  a.sn-link:hover { background: var(--royal); }
+  a.sn-link:focus-visible { outline-color: var(--aqua); }
+  .sn-link.sn-hot { background: var(--grass); color: var(--ink); }
+  .sn-link.sn-hot strong { color: var(--ink); }
+  a.sn-link.sn-hot:hover { background: #8fd66b; }
+  .sn-link.sn-here { background: var(--aqua); color: var(--obs); }
+  .sn-link.sn-here strong { color: var(--obs); }
+  .sn-link.sn-here small { font-weight: 700; }

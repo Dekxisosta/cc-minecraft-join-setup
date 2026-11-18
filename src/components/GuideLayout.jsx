@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 import useActiveSection from "../hooks/useActiveSection.js";
 import useDocumentTitle from "../hooks/useDocumentTitle.js";
 import { Hero, SiteFooter, LEAD } from "./SiteChrome.jsx";
+import SiteNav from "./SiteNav.jsx";
+import { CreditsSection } from "./SharedSections.jsx";
 
-// Shared frame for the /windows and /macos-linux pages.
+// Shared frame for the guide pages.
 // toc: [{ id, label }]. Every id must match a <Section id>.
+// The layout owns the tail of every page: navigation, credits, footer.
 export default function GuideLayout({ title, pageTitle, toc, children }) {
   useDocumentTitle(pageTitle);
   const active = useActiveSection(toc.map((t) => t.id));
@@ -28,6 +31,8 @@ export default function GuideLayout({ title, pageTitle, toc, children }) {
         <Link to="/" className="dl-btn back">Choose a different system</Link>
         <Hero title={title} lead={LEAD} />
         {children}
+        <SiteNav />
+        <CreditsSection />
         <SiteFooter />
       </main>
     </div>

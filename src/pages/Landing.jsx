@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useDocumentTitle from "../hooks/useDocumentTitle.js";
 import { Hero, SiteFooter, LEAD } from "../components/SiteChrome.jsx";
+import SiteNav from "../components/SiteNav.jsx";
 import Section from "../components/Section.jsx";
 import { DISCORD_URL } from "../config.js";
 
@@ -25,10 +26,8 @@ export default function Landing() {
             You will need the Tailscale auth key from the{" "}
             <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer">Discord server</a>.
           </p>
-          <p className="pg-entry">
-            <Link to="/plugins">See what is installed on the server</Link>
-          </p>
         </Section>
+        <SiteNav />
         <SiteFooter />
       </main>
     </div>
