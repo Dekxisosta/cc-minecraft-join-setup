@@ -3,15 +3,7 @@ import GuideLayout from "../components/GuideLayout.jsx";
 import Section from "../components/Section.jsx";
 import { ADDRESS } from "../config.js";
 
-const TOC = [
-  { id: "overview", label: "Overview" },
-  { id: "authme", label: "AuthMe" },
-  { id: "skins", label: "SkinsRestorer" },
-  { id: "imageframe", label: "ImageFrame" },
-  { id: "gsit", label: "GSit" },
-  { id: "tpa", label: "SimpleTPA" },
-  { id: "displays", label: "Dream Displays" },
-];
+const TOC_HEAD = [{ id: "overview", label: "Overview" }];
 
 const PLUGINS = [
   {
@@ -109,11 +101,85 @@ const PLUGINS = [
     notes: "There is a short cooldown between requests.",
   },
   {
+    id: "sethome",
+    name: "SetHome",
+    version: "6.3",
+    tagline: "Save a spot and teleport back to it later.",
+    body: "Every player can keep a number of named homes. The default limit is 15, and the server can give different limits to different ranks.",
+    commands: [
+      ["/sethome <name>", "Create a home where you stand"],
+      ["/home <name>", "Teleport to one of your homes"],
+      ["/delhome <name>", "Delete a home"],
+      ["/listhomes <player>", "List a player's homes"],
+      ["/admindelhome <player> <home>", "Admin: delete someone's home"],
+    ],
+    notes: "A cooldown applies between teleports. If you move while the teleport is counting down, it is cancelled.",
+  },
+  {
+    id: "rtp",
+    name: "justRTP",
+    version: "3.8.0",
+    tagline: "Random teleport to a safe spot.",
+    body: "Sends you somewhere random inside a radius set per world. Landing spots are cached in the background, so most teleports do not have to search live.",
+    commands: [
+      ["/rtp", "Teleport to a random safe spot"],
+      ["/rtp <world>", "Teleport into a specific world"],
+      ["/rtp help", "List every subcommand"],
+    ],
+    notes: "There is a cooldown and a short warm-up. Ask an admin if you need a specific world or a wider radius.",
+  },
+  {
+    id: "tablistping",
+    name: "TabListPing",
+    version: "2.03",
+    tagline: "Everyone's ping, in the tab list.",
+    body: "Shows how much latency each player actually has, measured by the plugin itself rather than taken from the server's rough estimate.",
+    commands: [
+      ["/tlp", "Short alias for the plugin command"],
+      ["/tlp reload", "Reload the config (admin)"],
+      ["/tlp report", "Print a ping report (admin)"],
+    ],
+    notes: "No setup needed: it starts working as soon as the server is up. The colour changes with the quality of the connection.",
+  },
+  {
+    id: "speedghast",
+    name: "Faster Happy Ghasts",
+    version: "1.1.3",
+    tagline: "Happy ghasts that actually get somewhere.",
+    body: "Raises the flying speed of a ridden happy ghast. Vanilla tops out around 3.6 blocks per second, which is slower than walking; this server runs several times that.",
+    commands: [
+      ["/happyghast reload", "Reload the speed settings (admin)"],
+    ],
+    notes: "Speed is set in plugins/FasterHappyGhast/config.yml. Ghasts that nobody is riding keep the vanilla speed.",
+  },
+  {
+    id: "callghast",
+    name: "Call Your Happy Ghast",
+    short: "Call Your Ghast",
+    version: "2.2.0",
+    tagline: "Whistle for your ghast with a goat horn.",
+    body: "Name a happy ghast, bind it to a goat horn, and the horn will teleport it to you from anywhere — even from chunks that are not loaded.",
+    steps: {
+      title: "Binding a horn",
+      items: [
+        "Name the happy ghast. Names cannot contain characters like # or '.",
+        "Hold a goat horn and sneak while looking at the ghast.",
+        "The horn becomes enchanted and takes the ghast's name.",
+        "Use the horn and the ghast teleports to you. Anyone holding that horn can call it.",
+        "To unbind: sneak and look straight up.",
+      ],
+    },
+    commands: [
+      ["/trigger call_your_happy_ghast.config", "Open the config options"],
+    ],
+    notes: "Leashed animals travel with the ghast: attach the lead to the ghast first, then to the animal. The server also runs the lib-5555ff library this plugin needs.",
+  },
+  {
     id: "displays",
     name: "Dream Displays",
     version: "1.10.2",
     tagline: "Video screens inside the world.",
-    body: "A screen is a wall of black concrete. Select it with a diamond axe, create the display, then point it at a video URL. Playback is synchronised across the server, so everyone watching sees the same frame.",
+    body: "A display is a wall of black concrete. Select it with a diamond axe, create the display, then point it at a video URL. Playback is synchronised across the server, so everyone watching sees the same frame.",
     steps: {
       title: "Building a screen",
       items: [
@@ -136,11 +202,48 @@ const PLUGINS = [
     ],
     notes:
       "Every player needs the Dream Displays client mod installed, otherwise screens stay blank. It is a Fabric mod, separate from this setup guide.",
-    link: {
-      href: "https://modrinth.com/plugin/dreamdisplays",
-      label: "Get the client mod",
-    },
+    link: { href: "https://modrinth.com/plugin/dreamdisplays", label: "Get the client mod" },
   },
+  {
+    id: "statusbot",
+    name: "Statusbot",
+    version: "24.0",
+    tagline: "A Discord bot that mirrors the server.",
+    body: "Keeps a Discord bot's status in step with the server: how many players are online and who they are. It can also post server start, stop, join and leave messages into a channel you pick, and publish a status embed.",
+    commands: [
+      ["!help", "List the bot's commands"],
+      ["!regChannelForMessages", "Register the channel (or DM) that receives events"],
+      ["!endRegChannelForMessages", "Stop sending events there"],
+      ["!sendEmbed", "Post the server status embed"],
+    ],
+    notes: "These are typed into Discord, with a leading exclamation mark. Registering a channel in a guild needs the Manage Channel permission there.",
+  },
+  {
+    id: "discordsrv",
+    name: "DiscordSRV",
+    version: "1.30.5",
+    tagline: "Chat bridge between Minecraft and Discord.",
+    body: "Messages typed in game appear in the Discord channel, and messages typed in Discord appear in game chat with a [Discord] prefix. The same plugin can also relay the console and post join, leave, death and achievement notices.",
+    commands: [
+      ["/discord", "Show the Discord invite link"],
+      ["/discordsrv link", "Get a code to link your Discord account"],
+      ["/discordsrv linked", "Check whether you are linked"],
+      ["/discordsrv unlink", "Remove the link"],
+      ["!players", "In Discord: list who is online"],
+      ["!c <command>", "In Discord: run a console command"],
+    ],
+    notes: "The bridge uses its own bot, separate from Statusbot. Only the #mc-chat channel is bridged, so keep general chat where it is.",
+  },
+];
+
+// A-Z by plugin name; ties fall through to the next letter.
+const sortedPlugins = [...PLUGINS].sort((a, b) =>
+  a.name.localeCompare(b.name, "en", { sensitivity: "base" })
+);
+
+const TOC = [
+  ...TOC_HEAD,
+  ...sortedPlugins.map((p) => ({ id: p.id, label: p.short || p.name })),
 ];
 
 function Plugin({ plugin }) {
@@ -192,17 +295,21 @@ export default function PluginsPage() {
     >
       <Section id="overview" title="Overview">
         <p>
-          Everything below is already installed and running on{" "}
-          <code>{ADDRESS}</code>. You do not need to install anything for any of
-          these except Dream Displays, which is marked as such.
+          Thirteen plugins are installed and running on <code>{ADDRESS}</code>.
+          Everything below is already set up, so there is nothing for you to
+          install. Two of them need something on your side: Dream Displays only
+          works if you install its client mod, and SkinsRestorer wants you to
+          upload a PNG on its website before you run the command it gives you.
         </p>
         <p className="pg-note">
-          Commands are run in the chat box, with the leading slash. Anything in
-          angle brackets is an argument you replace.
+          Commands are typed into the chat box with the leading slash, except
+          the Statusbot and DiscordSRV ones, which are typed into Discord with a
+          leading exclamation mark. Anything in angle brackets is an argument you
+          replace.
         </p>
       </Section>
 
-      {PLUGINS.map((p) => (
+      {sortedPlugins.map((p) => (
         <Plugin key={p.id} plugin={p} />
       ))}
 
