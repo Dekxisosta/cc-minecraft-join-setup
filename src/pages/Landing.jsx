@@ -25,6 +25,9 @@ export default function Landing() {
             You will need the Tailscale auth key from the{" "}
             <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer">Discord server</a>.
           </p>
+          <p className="pg-entry">
+            <Link to="/plugins">See what is installed on the server</Link>
+          </p>
         </Section>
         <SiteFooter />
       </main>

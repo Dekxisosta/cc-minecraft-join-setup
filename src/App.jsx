@@ -4,6 +4,7 @@ import Landing from "./pages/Landing.jsx";
 import WindowsPage from "./pages/WindowsPage.jsx";
 import MacLinuxPage from "./pages/MacLinuxPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import PluginsPage from "./pages/PluginsPage.jsx";
 
 // New page = start at the top. A hash link (#setup) is left to the browser.
 function ScrollToTop() {
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/windows" element={<WindowsPage />} />
         <Route path="/macos-linux" element={<MacLinuxPage />} />
+        <Route path="/plugins" element={<PluginsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
